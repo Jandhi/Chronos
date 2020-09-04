@@ -1,0 +1,11 @@
+C:\Users\Jan\RiderProjects\Chronos\Chronos\bin\Debug\netcoreapp3.0\Chronos.exe
+C:\Users\Jan\RiderProjects\Chronos\Chronos\bin\Debug\netcoreapp3.0\Chronos.deps.json
+C:\Users\Jan\RiderProjects\Chronos\Chronos\bin\Debug\netcoreapp3.0\Chronos.runtimeconfig.json
+C:\Users\Jan\RiderProjects\Chronos\Chronos\bin\Debug\netcoreapp3.0\Chronos.runtimeconfig.dev.json
+C:\Users\Jan\RiderProjects\Chronos\Chronos\bin\Debug\netcoreapp3.0\Chronos.dll
+C:\Users\Jan\RiderProjects\Chronos\Chronos\bin\Debug\netcoreapp3.0\Chronos.pdb
+C:\Users\Jan\RiderProjects\Chronos\Chronos\obj\Debug\netcoreapp3.0\Chronos.csprojAssemblyReference.cache
+C:\Users\Jan\RiderProjects\Chronos\Chronos\obj\Debug\netcoreapp3.0\Chronos.AssemblyInfoInputs.cache
+C:\Users\Jan\RiderProjects\Chronos\Chronos\obj\Debug\netcoreapp3.0\Chronos.AssemblyInfo.cs
+C:\Users\Jan\RiderProjects\Chronos\Chronos\obj\Debug\netcoreapp3.0\Chronos.dll
+C:\Users\Jan\RiderProjects\Chronos\Chronos\obj\Debug\netcoreapp3.0\Chronos.pdb

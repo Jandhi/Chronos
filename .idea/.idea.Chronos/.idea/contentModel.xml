@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Jan\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Jan\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_Chronos.-1768890056.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Jan\RiderProjects\Chronos" t="IncludeFlat">
+      <e p="Chronos" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Categories" t="Include">
+          <e p="Category.cs" t="Include" />
+          <e p="Matcher.cs" t="Include" />
+          <e p="NonceSet.cs" t="Include" />
+        </e>
+        <e p="Change" t="Include">
+          <e p="Context.cs" t="Include" />
+          <e p="Generation" t="Include">
+            <e p="Adder.cs" t="Include" />
+            <e p="Generator.cs" t="Include" />
+            <e p="Modifier.cs" t="Include" />
+          </e>
+          <e p="SoundChange.cs" t="Include" />
+        </e>
+        <e p="Chronos.csproj" t="IncludeRecursive" />
+        <e p="Coding" t="Include">
+          <e p="Cypher.cs" t="Include" />
+          <e p="LatinCypher.cs" t="Include" />
+        </e>
+        <e p="Features" t="Include">
+          <e p="ConsonantalFeature.cs" t="Include" />
+          <e p="Feature.cs" t="Include" />
+          <e p="Lingon.cs" t="Include" />
+          <e p="MoA.cs" t="Include" />
+          <e p="PoA.cs" t="Include" />
+          <e p="VowelBackness.cs" t="Include" />
+          <e p="VowelFeature.cs" t="Include" />
+          <e p="VowelHeight.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.0" t="Include">
+              <e p="Chronos.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Pattern.cs" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Sequence.cs" t="Include" />
+      </e>
+      <e p="Chronos.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
