@@ -71,6 +71,42 @@ namespace Chronos.Coding
                         index += len - 1;
                         break;
                     }
+                    else if (bunch.Length > 1 && bunch.Substring(1).StartsWith("[") && bunch.EndsWith("]"))
+                    {
+                        var symbol = bunch.Substring(0, 1);
+                        var split = bunch.Substring(1).Split("]").Where(ft => ft != "").ToList();
+                            
+                        if (split.Any(segment => !segment.StartsWith("[")))
+                        {
+                            continue;
+                        }
+
+                        var features = split.Select(ft => ft.Replace("[", ""));
+                        var hasFeatures = new List<Feature>();
+                        var notFeatures = new List<Feature>();
+                        
+                        if (Lingons.ContainsKey(symbol))
+                        {
+                            hasFeatures.AddRange(Lingons[symbol].Features);
+                        }
+                        else if (Categories.ContainsKey(symbol))
+                        {
+                            hasFeatures.AddRange(Categories[symbol].HasFeatures);
+                            notFeatures.AddRange(Categories[symbol].NotFeatures);
+                        }
+
+                        
+                        foreach (var feature in features)
+                        {
+                            var add = !feature.StartsWith("-");
+                            var name = feature.Substring(1);
+                            (add ? hasFeatures : notFeatures).Add(Feature.AllFeatures.First(ft => String.Equals(ft.Name, name, StringComparison.CurrentCultureIgnoreCase)));
+                        }
+                            
+                        pattern.Add(new Category(hasFeatures, notFeatures));
+                        index += len - 1; //Move to end of bunch
+                        break;
+                    } 
                     else if (Lingons.ContainsKey(bunch))
                     {
                         pattern.Add(Lingons[bunch]);
@@ -110,18 +146,27 @@ namespace Chronos.Coding
                     {
                         list.Add(new Adder(Lingons[bunch]));
                         index += len - 1; //Move to end of bunch
-                    }
+                    } 
+                    
                     else if (bunch.Length > 2 && bunch.Substring(1).StartsWith("[") && bunch.EndsWith("]"))
                     {
                         var indexString = bunch.Substring(0, 1);
                         try
                         {
                             var indexNum = int.Parse(indexString);
-                            var features = bunch.Substring(1).Split("]").ToList().Select(ft => ft.Replace("[", ""));
+                            var split = bunch.Substring(1).Split("]").Where(ft => ft != "").ToList();
+                            
+                            if (split.Any(segment => !segment.StartsWith("[")))
+                            {
+                                continue;
+                            }
+
+                            var features = split.Select(ft => ft.Replace("[", ""));
                             var addFeatures = new List<Feature>();
                             var subFeatures = new List<Feature>();
-                            foreach (var feature in features.Where(ft => ft != ""))
+                            foreach (var feature in features)
                             {
+                                if(feature == "") continue;
                                 var add = !feature.StartsWith("-");
                                 var name = feature.Substring(1);
                                 (add ? addFeatures : subFeatures).Add(Feature.AllFeatures.First(ft => String.Equals(ft.Name, name, StringComparison.CurrentCultureIgnoreCase)));
@@ -134,6 +179,17 @@ namespace Chronos.Coding
                         catch (FormatException e)
                         {
                             break;
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            var indexNum = int.Parse(bunch);
+                            list.Add(new Modifier(indexNum));
+                        }
+                        catch (FormatException e)
+                        {
                         }
                     }
                 }
@@ -199,7 +255,25 @@ namespace Chronos.Coding
             if (split[2] != "")
             {
                 var contextSplit = split[2].Split("_");
-                context = new Context(EncodePattern(contextSplit[0]), EncodePattern(contextSplit[1]));
+                var before = EncodePattern(contextSplit[0]);
+
+                //Switch end of word with start of word
+                var endOfWords = new List<int>();
+                for (var i = 0; i < before.Count; i++)
+                {
+                    if (before[i].Equals(Lingon.EndOfWord))
+                    {
+                        endOfWords.Add(i);
+                    }
+                }
+
+                foreach (var index in endOfWords)
+                {
+                    before[index] = Lingon.StartOfWord;
+                }
+                
+                var after = EncodePattern(contextSplit[1]);
+                context = new Context(before, after);
             }
             else
             {

@@ -8,10 +8,10 @@ namespace Chronos.Change.Generation
 {
     public class Modifier : Generator
     {
-        public Modifier(int index, List<Feature> addFeatures, List<Feature> subtractFeatures = null)
+        public Modifier(int index, List<Feature> addFeatures = null, List<Feature> subtractFeatures = null)
         {
             Index = index - 1;
-            AddFeatures = addFeatures;
+            AddFeatures = addFeatures ?? new List<Feature>();
             SubtractFeatures = subtractFeatures ?? new List<Feature>();
         }
 

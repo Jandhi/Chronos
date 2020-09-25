@@ -5,9 +5,9 @@ using Chronos.Phonology;
 
 namespace Chronos.Coding
 {
-    public class LatinCypher : Cypher
+    public class VolodnianCypher : Cypher
     {
-        public static readonly Dictionary<string, Lingon> LatinLingons = new Dictionary<string, Lingon>
+        public static readonly Dictionary<string, Lingon> VolodnianLingons = new Dictionary<string, Lingon>
         {
             {"a", Lingon.MakeVowel(VowelHeight.Low, VowelBackness.Back)},
             {"e", Lingon.MakeVowel(VowelHeight.Mid, VowelBackness.Front)},
@@ -31,8 +31,10 @@ namespace Chronos.Coding
             
             {"m", Lingon.MakeConsonant(PoA.Labial, MoA.Nasal)},
             {"n", Lingon.MakeConsonant(PoA.Alveolar, MoA.Nasal)},
+            
             {"l", Lingon.MakeConsonant(PoA.Alveolar, MoA.LateralApproximant)},
             {"r", Lingon.MakeConsonant(PoA.Alveolar, MoA.Trill)},
+            
             {"h", Lingon.MakeConsonant(PoA.Glottal, MoA.Fricative)},
             {"s", Lingon.MakeConsonant(PoA.Alveolar, MoA.Fricative)},
             
@@ -43,7 +45,7 @@ namespace Chronos.Coding
             {"lh", Lingon.MakeConsonant(PoA.Palatal, MoA.LateralApproximant)}
         };
         
-        public static readonly Dictionary<string, Category> LatinCategories = new Dictionary<string, Category>
+        public static readonly Dictionary<string, Category> VolodnianCategories = new Dictionary<string, Category>
         {
             {"V", Category.MakeWith(Feature.Vowel).Without(VowelFeature.Long)},
             {"L", Category.MakeWith(Feature.Vowel, VowelFeature.Long)},
@@ -51,45 +53,33 @@ namespace Chronos.Coding
             {"F", Category.MakeWith(VowelBackness.Front)},
             {"B", Category.MakeWith(VowelBackness.Back)},
             {"S", Category.MakeWith(MoA.Plosive).Without(ConsonantalFeature.Voiced)},
-            {"Z", Category.MakeWith(MoA.Plosive, ConsonantalFeature.Voiced)}
+            {"Z", Category.MakeWith(MoA.Plosive, ConsonantalFeature.Voiced)},
         };
         
-        public LatinCypher() : base(LatinLingons, LatinCategories)
+        public VolodnianCypher() : base(VolodnianLingons, VolodnianCategories)
         {
             
         }
         
         public static readonly List<string> ChangeStrings = new List<string>
         {
-            "[sm]//_#",
-            "i/j/_V",
-            "L/1[-long]/_",
-            "e//Vr_#",
-            "v//V_V",
-            "u/o/_#",
-            "gn/nh/_",
-            "S/1[+voiced]/V_V",
-            "c/i/F_t",
-            "c/u/B_t",
-            "p//V_t",
-            "ii/i/_",
-            "e//C_rV",
-            "lj/lh/_",
-        };
+            //PROTO-VOLODNIAN
+            "Vn/1[+nasalized]/_/_V",
+            "V[+nasalized]/1[-nasalized]/_",
+            "V[+back]/v1[]/#_",
+            "V[+front]/j1[]/#_",
 
+            //GREATER VOLODNIAN
+            "V[-shortened]CV[+high]/1[+lengthened]2[]3[+shortened]/_",
+            "V[+shortened]//_",
+            "e[+lengthened]/ie/_"
+
+        };
+        
         public static readonly List<string> Dictionary = new List<string>
         {
-            "lector",
-            "doctor",
-            "focus",
-            "jocus",
-            "districtus",
-            "cīvitatem",
-            "adoptare",
-            "opera",
-            "secundus",
-            "fīliam",
-            "pōntem",
+            "resun",
+            "aran",
         };
     }
 }

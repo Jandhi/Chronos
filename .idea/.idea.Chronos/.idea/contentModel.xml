@@ -24,6 +24,7 @@
         <e p="Coding" t="Include">
           <e p="Cypher.cs" t="Include" />
           <e p="LatinCypher.cs" t="Include" />
+          <e p="VolodnianCypher.cs" t="Include" />
         </e>
         <e p="Features" t="Include">
           <e p="ConsonantalFeature.cs" t="Include" />

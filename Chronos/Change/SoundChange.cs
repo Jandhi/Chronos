@@ -27,9 +27,9 @@ namespace Chronos.Change
         public Sequence Apply(Sequence old)
         {
             var word = old.ToSequence().WithEnds();
-            var maxLen = word.Count;
             for (var start = 0; start < word.Count; start++)
             {
+                var maxLen = word.Count;
                 for (var len = maxLen - start; len > 0; len--)
                 {
                     var sequence = word.Subsequence(start, len);
@@ -39,8 +39,7 @@ namespace Chronos.Change
                     if (Matches(sequence, before, after))
                     {
                         var modified = Modify(sequence);
-                        start += (sequence.Count - modified.Count);
-                        maxLen += (modified.Count - word.Count);
+                        start += (modified.Count - sequence.Count);
 
                         word.Clear();
                         word.AddRange(before);
