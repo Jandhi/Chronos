@@ -1,14 +1,15 @@
 
 from orthography.orthography import Orthography, post_symbol
-from phonology.features import Affricate, Alveolar, Alveopalatal, Approximant, Back, Bilabial, Central, Close, Close_mid, Fricative, Front, Glottal, Labiovelar, Lateral, Lengthened, Long, Mid, Nasal, Nasalized, Open, Open_mid, Overlong, Palatal, Palatalized, Plosive, Postalveolar, Retroflex, Rounded, Tap, Trill, Uvular, Velar
+from phonology.features import Affricate, Alveolar, Alveopalatal, Approximant, Back, Bilabial, Central, Close, Close_mid, Fricative, Front, Glottal, Labiodental, Labiovelar, Lateral, Lengthened, Long, Mid, Nasal, Nasalized, Open, Open_mid, Overlong, Palatal, Palatalized, Plosive, Postalveolar, Retroflex, Rounded, Stressed, Tap, Trill, Uvular, Velar
 from phonology.sound import Consonant, Vowel
 
 processors = [
     post_symbol(Lengthened, '\u0301'),
     post_symbol(Long, '\u0304'),
-    post_symbol(Overlong, '\0302'),
+    post_symbol(Overlong, '\u0302'),
     post_symbol(Nasalized, '\u0303'),
     post_symbol(Palatalized, 'ʲ'),
+    post_symbol(Stressed, '\u0331'),
 ]
 
 symbols = [
@@ -43,8 +44,8 @@ symbols = [
     # Fricatives
     (Consonant(Bilabial, Fricative).make(), 'ɸ'),
     (Consonant(Bilabial, Fricative).voiced().make(), 'β'),
-    (Consonant(Labiovelar, Fricative).make(), 'f'),
-    (Consonant(Labiovelar, Fricative).voiced().make(), 'v'),
+    (Consonant(Labiodental, Fricative).make(), 'f'),
+    (Consonant(Labiodental, Fricative).voiced().make(), 'v'),
     (Consonant(Alveolar, Fricative).make(), 's'),
     (Consonant(Alveolar, Fricative).voiced().make(), 'z'),
     (Consonant(Alveopalatal, Fricative).make(), 'ɕ'),

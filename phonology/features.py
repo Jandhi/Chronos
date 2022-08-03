@@ -37,6 +37,7 @@ Lengthened = 'lengthened'
 Long = 'long'
 Overlong = 'overlong'
 Vocalic = 'vocalic'
+Stressed = 'stressed'
 
 # CONSONANTS
 
