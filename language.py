@@ -1,5 +1,6 @@
 from chronology.change_set import ChangeSet
 from orthography.orthography import Orthography
+from util import count_combining
 
 
 class Language:
@@ -16,7 +17,9 @@ class Language:
         print(self.get_display_string(word))
     
     def get_display_string(self, word):
-        s = f'{self.short_form}: {self.orthography.word_to_string(word)}'.ljust(12 + len(self.short_form))
+        s = f'{self.short_form}: {self.orthography.word_to_string(word)}'
+        # spacing
+        s = s.ljust(12 + len(self.short_form) + count_combining(s))
 
         for child, changeset in self.children:
             s = f'{s}| {child.get_display_string(changeset.apply(word))}'

@@ -205,19 +205,28 @@ class Orthography:
         suffix = None
         at_start = False
         at_end = False
+        exception_prefix = None
+        exception_suffix = None
 
         if len(second_split) > 1:
             third_split = second_split[1].split('_')
-            prefix_string = third_split[0].strip()
-            if prefix_string.startswith('#'):
-                at_start = True
-                prefix_string = prefix_string[1:]
-            prefix = self.parse_match(prefix_string)
 
-            suffix_string = third_split[1].strip()
-            if suffix_string.endswith('#'):
-                at_end = True
-                suffix_string = suffix_string[:-1]
-            suffix = self.parse_match(suffix_string)
+            if len(third_split) == 2:
+                prefix_string = third_split[0].strip()
+                if prefix_string.startswith('#'):
+                    at_start = True
+                    prefix_string = prefix_string[1:]
+                prefix = self.parse_match(prefix_string)
+
+                suffix_string = third_split[1].strip()
+                if suffix_string.endswith('#'):
+                    at_end = True
+                    suffix_string = suffix_string[:-1]
+                suffix = self.parse_match(suffix_string)
         
-        return SoundChange(input, output, prefix, suffix, direction, at_start, at_end)
+        if len(second_split) == 3:
+            fourth_split = second_split[2].split('_')
+            exception_prefix = self.parse_match(fourth_split[0].strip())
+            exception_suffix = self.parse_match(fourth_split[1].strip())
+        
+        return SoundChange(input, output, prefix, suffix, direction, at_start, at_end, exception_prefix, exception_suffix)

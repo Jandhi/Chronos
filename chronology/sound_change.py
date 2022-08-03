@@ -52,7 +52,16 @@ class Transform:
         return snd
 
 class SoundChange:
-    def __init__(self, input : list[Category], output : list[Transform], prefix : list[Category] = None, suffix : list[Category] = None, direction : int = 1, at_start = False, at_end = False) -> None:
+    def __init__(self, 
+            input : list[Category], 
+            output : list[Transform], 
+            prefix : list[Category] = None, 
+            suffix : list[Category] = None, 
+            direction : int = 1, 
+            at_start = False, 
+            at_end = False,
+            exception_prefix : list[Category] = None,
+            exception_suffix : list[Category] = None) -> None:
         self.input = input
         self.output = output
         self.prefix : list[Category] = not_none(prefix, [])
@@ -60,6 +69,8 @@ class SoundChange:
         self.direction = direction
         self.at_start = at_start
         self.at_end = at_end
+        self.exception_prefix = exception_prefix
+        self.exception_suffix = exception_suffix
     
     def apply(self, word : Word, start = 0) -> Word:
         i = start
@@ -121,5 +132,35 @@ class SoundChange:
 
             if not cat.is_match(sound):
                 return False
+        
+        if self.exception_prefix is not None:
+            for i in range(len(self.exception_prefix)):
+                cat = self.exception_prefix[i]
+
+                if start - len(self.exception_prefix) + i < 0:
+                    break
+
+                sound = sounds[start - len(self.exception_prefix) + i]
+
+                if not cat.is_match(sound):
+                    break
+                
+                if i == len(self.exception_prefix) - 1:
+                    return False
+        
+        if self.exception_suffix is not None:
+            for i in range(len(self.exception_suffix)):
+                cat = self.exception_suffix[i]
+
+                if end + i >= len(sounds):
+                    break
+
+                sound = sounds[end + i]
+
+                if not cat.is_match(sound):
+                    break
+                
+                if i == len(self.exception_suffix) - 1:
+                    return False
         
         return True

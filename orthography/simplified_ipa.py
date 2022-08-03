@@ -1,6 +1,6 @@
 
 from orthography.orthography import Orthography, post_symbol
-from phonology.features import Affricate, Alveolar, Alveopalatal, Approximant, Back, Bilabial, Central, Close, Close_mid, Fricative, Front, Glottal, Labiodental, Labiovelar, Lateral, Lengthened, Long, Mid, Nasal, Nasalized, Open, Open_mid, Overlong, Palatal, Palatalized, Plosive, Postalveolar, Retroflex, Rounded, Stressed, Tap, Trill, Uvular, Velar
+from phonology.features import Affricate, Alveolar, Alveopalatal, Approximant, Back, Bilabial, Central, Close, Close_mid, Ejective, Fricative, Front, Glottal, Labiodental, Labiovelar, Lateral, Lengthened, Long, Mid, Nasal, Nasalized, Open, Open_mid, Overlong, Palatal, Palatalized, Plosive, Postalveolar, Retroflex, Rounded, Stressed, Tap, Trill, Uvular, Velar
 from phonology.sound import Consonant, Vowel
 
 processors = [
@@ -10,6 +10,7 @@ processors = [
     post_symbol(Nasalized, '\u0303'),
     post_symbol(Palatalized, 'ʲ'),
     post_symbol(Stressed, '\u0331'),
+    post_symbol(Ejective, '\''),
 ]
 
 symbols = [
@@ -25,6 +26,10 @@ symbols = [
     (Vowel(Close, Back).rounded().make() , 'u'),
     (Vowel(Close_mid, Back).rounded().make() , 'o'),
     (Vowel(Open_mid, Back).rounded().make() , 'ɔ'),
+    (Vowel(Open, Back).make(), 'ɑ'),
+    (Vowel(Open_mid, Back).make(), 'ʌ'),
+    (Vowel(Close_mid, Back).make(), 'ɤ'),
+    (Vowel(Close, Back).make(), 'ɯ'),
     # Nasals
     (Consonant(Bilabial, Nasal).voiced().make() , 'm'),
     (Consonant(Alveolar, Nasal).voiced().make() , 'n'),
@@ -63,10 +68,12 @@ symbols = [
     (Consonant(Glottal, Fricative).make(), 'h'),
     (Consonant(Glottal, Fricative).voiced().make(), 'ɦ'),
     # Affricates
-    (Consonant(Alveolar, Affricate).make(), 'ts'),
-    (Consonant(Alveolar, Affricate).voiced().make(), 'dz'),
-    (Consonant(Postalveolar, Affricate).make(), 'tʃ'),
-    (Consonant(Postalveolar, Affricate).voiced().make(), 'dʒ'),
+    (Consonant(Alveolar, Affricate).make(), 't͡s'),
+    (Consonant(Alveolar, Affricate).voiced().make(), 'd͡z'),
+    (Consonant(Alveopalatal, Affricate).make(), 't͡ɕ'),
+    (Consonant(Alveopalatal, Affricate).voiced().make(), 'd͡ʑ'),
+    (Consonant(Postalveolar, Affricate).make(), 't͡ʃ'),
+    (Consonant(Postalveolar, Affricate).voiced().make(), 'd͡ʒ'),
     # Approximants and trills
     (Consonant(Labiovelar, Approximant).make(), 'ʍ'),
     (Consonant(Labiovelar, Approximant).voiced().make(), 'w'),
