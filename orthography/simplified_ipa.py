@@ -1,11 +1,14 @@
 
 from orthography.orthography import Orthography, post_symbol
-from phonology.features import Affricate, Alveolar, Alveopalatal, Approximant, Back, Bilabial, Central, Close, Close_mid, Fricative, Front, Labiovelar, Lateral, Long, Mid, Nasal, Nasalized, Open, Open_mid, Palatal, Plosive, Postalveolar, Retroflex, Rounded, Tap, Trill, Uvular, Velar
+from phonology.features import Affricate, Alveolar, Alveopalatal, Approximant, Back, Bilabial, Central, Close, Close_mid, Fricative, Front, Glottal, Labiovelar, Lateral, Lengthened, Long, Mid, Nasal, Nasalized, Open, Open_mid, Overlong, Palatal, Palatalized, Plosive, Postalveolar, Retroflex, Rounded, Tap, Trill, Uvular, Velar
 from phonology.sound import Consonant, Vowel
 
 processors = [
+    post_symbol(Lengthened, '\u0301'),
     post_symbol(Long, '\u0304'),
+    post_symbol(Overlong, '\0302'),
     post_symbol(Nasalized, '\u0303'),
+    post_symbol(Palatalized, 'ʲ'),
 ]
 
 symbols = [
@@ -56,6 +59,8 @@ symbols = [
     (Consonant(Velar, Fricative).voiced().make(), 'ɣ'),
     (Consonant(Uvular, Fricative).make(), 'χ'),
     (Consonant(Uvular, Fricative).voiced().make(), 'ʁ'),
+    (Consonant(Glottal, Fricative).make(), 'h'),
+    (Consonant(Glottal, Fricative).voiced().make(), 'ɦ'),
     # Affricates
     (Consonant(Alveolar, Affricate).make(), 'ts'),
     (Consonant(Alveolar, Affricate).voiced().make(), 'dz'),

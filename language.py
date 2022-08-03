@@ -16,10 +16,10 @@ class Language:
         print(self.get_display_string(word))
     
     def get_display_string(self, word):
-        s = f'{self.short_form}: {self.orthography.word_to_string(word)}'
+        s = f'{self.short_form}: {self.orthography.word_to_string(word)}'.ljust(12 + len(self.short_form))
 
         for child, changeset in self.children:
-            s = f'{s} \t| {child.get_display_string(changeset.apply(word))}'
+            s = f'{s}| {child.get_display_string(changeset.apply(word))}'
         
         return s
 

@@ -64,20 +64,17 @@ class SoundChange:
     def apply(self, word : Word, start = 0) -> Word:
         i = start
 
-        if self.at_end:
+        if (start == 0 and self.direction == -1) or self.at_end:
             i = len(word.sounds) - len(self.input)
 
-        while i < len(word.sounds):
-            if i < 0:
-                return word
-
+        while i < len(word.sounds) and i >= 0:
             if self.at_start and i != 0:
                 return word
 
             if self.is_match(word, i):
                 return self.apply(*self.apply_to_match(word, i))
             
-            i += 1
+            i += self.direction
 
         return word
 

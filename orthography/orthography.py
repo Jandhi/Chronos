@@ -189,6 +189,12 @@ class Orthography:
         return list
     
     def parse_sc(self, string : str):
+        direction = 1
+
+        if string.endswith('<<'):
+            string = string[:-2]
+            direction = -1
+
         first_split = string.split('->')
         input = self.parse_match(first_split[0].strip())
 
@@ -214,4 +220,4 @@ class Orthography:
                 suffix_string = suffix_string[:-1]
             suffix = self.parse_match(suffix_string)
         
-        return SoundChange(input, output, prefix, suffix, at_start=at_start, at_end=at_end)
+        return SoundChange(input, output, prefix, suffix, direction, at_start, at_end)
