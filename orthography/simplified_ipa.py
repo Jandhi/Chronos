@@ -6,6 +6,7 @@ from phonology.sound import Consonant, Vowel
 processors = [
     post_symbol(Lengthened, '\u0301'),
     post_symbol(Long, '\u0304'),
+    post_symbol(Long, '_'),
     post_symbol(Overlong, '\u0302'),
     post_symbol(Nasalized, '\u0303'),
     post_symbol(Palatalized, 'ʲ'),
@@ -69,11 +70,17 @@ symbols = [
     (Consonant(Glottal, Fricative).voiced().make(), 'ɦ'),
     # Affricates
     (Consonant(Alveolar, Affricate).make(), 't͡s'),
+    (Consonant(Alveolar, Affricate).make(), 't&s'),
     (Consonant(Alveolar, Affricate).voiced().make(), 'd͡z'),
+    (Consonant(Alveolar, Affricate).voiced().make(), 'd&z'),
     (Consonant(Alveopalatal, Affricate).make(), 't͡ɕ'),
+    (Consonant(Alveopalatal, Affricate).make(), 't&ɕ'),
     (Consonant(Alveopalatal, Affricate).voiced().make(), 'd͡ʑ'),
+    (Consonant(Alveopalatal, Affricate).voiced().make(), 'd&ʑ'),
     (Consonant(Postalveolar, Affricate).make(), 't͡ʃ'),
+    (Consonant(Postalveolar, Affricate).make(), 't&ʃ'),
     (Consonant(Postalveolar, Affricate).voiced().make(), 'd͡ʒ'),
+    (Consonant(Postalveolar, Affricate).voiced().make(), 'd&ʒ'),
     # Approximants and trills
     (Consonant(Labiovelar, Approximant).make(), 'ʍ'),
     (Consonant(Labiovelar, Approximant).voiced().make(), 'w'),
@@ -82,6 +89,7 @@ symbols = [
     (Consonant(Alveolar, Tap).voiced().make(), 'ɾ'),
     (Consonant(Alveolar, Approximant).with_feature(Lateral).voiced().make(), 'l'),
     (Consonant(Palatal, Approximant).voiced().make(), 'j'),
+    (Consonant(Velar, Approximant).voiced().make(), 'ɰ'),
 ]
 
 SimplifiedIpa = Orthography('simplified ipa', processors, symbols)

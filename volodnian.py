@@ -32,9 +32,9 @@ PVolToEVol = ChangeSet([
     SIPA.parse_sc(f'V[-{Front}] -> w0[] / #_'),
 
     # Short Vowel Merger
-    SIPA.parse_sc(f'V[+{Close_mid}] -> 0[+{Lengthened}] / #_'),
-    SIPA.parse_sc(f'C[]V[+{Close_mid}] -> 0[]1[+{Lengthened}] / #_'),
-    SIPA.parse_sc(f'V[+{Close_mid},-{Lengthened}] -> 0[-{Close_mid},+{Close}] // _j'),
+    SIPA.parse_sc(f'V[+{Close_mid},-{Long}] -> 0[+{Lengthened}] / #_'),
+    SIPA.parse_sc(f'C[]V[+{Close_mid},-{Long}] -> 0[]1[+{Lengthened}] / #_'),
+    SIPA.parse_sc(f'V[+{Close_mid},-{Long},-{Lengthened}] -> 0[-{Close_mid},+{Close}] // _j'),
     SIPA.parse_sc(f'V[+{Lengthened}] -> 0[-{Lengthened}]'),
 ])
 ProtoVolodnian.add_child(EarlyVolodnian, PVolToEVol)
@@ -54,7 +54,7 @@ EVoltoGVol = ChangeSet([
     SIPA.parse_sc(f'V[+{Close_mid},+{Nasalized}] -> 0[-{Close_mid},+{Open},-{Front},-{Back},-{Rounded},+{Central}]'),
 
     # R Lowering
-    SIPA.parse_sc(f'V[+{Close}] -> 0[-{Close},+{Close_mid}] / _r')
+    SIPA.parse_sc(f'V[+{Close},-{Long}] -> 0[-{Close},+{Close_mid}] / _r')
 ])
 EarlyVolodnian.add_child(GreaterVolodnian, EVoltoGVol)
 
@@ -73,23 +73,32 @@ GVoltoNEVol = ChangeSet([
     SIPA.parse_sc(f'V[+{Long}] -> 0[+{Overlong},-{Long}] / _C[]u <<'),
     
     # fricatives voice along the way
-    SIPA.parse_sc(f'V[]C[+{Fricative}] -> 0[]1[+{Voiced}] / #_V[+{Close},-{Long},-{Overlong},-{Lengthened}]'),
-    SIPA.parse_sc(f'C[]V[]C[+{Fricative}] -> 0[]1[]2[+{Voiced}] / #_V[+{Close},-{Long},-{Overlong},-{Lengthened}]'),
+    SIPA.parse_sc(f'V[]C[+{Fricative}] -> 0[]1[+{Voiced}] / #_V[+{Close},-{Long},-{Overlong},-{Lengthened},-{Nasalized}]'),
+    SIPA.parse_sc(f'C[]V[]C[+{Fricative}] -> 0[]1[]2[+{Voiced}] / #_V[+{Close},-{Long},-{Overlong},-{Lengthened},-{Nasalized}]'),
 
     # final step : erasure
     SIPA.parse_sc(f'C[]i -> 0[+{Palatalized}]'),
     SIPA.parse_sc(f'C[]u -> 0[]'),
 
+    # some illegal palatalizations
+    SIPA.parse_sc(f'C[+{Approximant},+{Palatalized},-{Lateral}] -> 0[-{Palatalized}]'),
+
     # Cracking down on Illegal clusters
     SIPA.parse_sc(f'C[+{Nasal},+{Palatalized}] -> 0[]e / #_C[]'),
     SIPA.parse_sc(f'C[+{Nasal},-{Palatalized}] -> 0[]a / #_C[]'),
+    SIPA.parse_sc(f'C[+{Approximant},+{Palatal}] -> 0[]e / #_C[]'),
+    SIPA.parse_sc(f'C[+{Approximant},-{Palatal}] -> 0[]a / #_C[]'),
+    
+    # Fricatives in the same position can't touch
+    SIPA.parse_sc(f'C[+{Fricative},+{Velar},+{Palatalized}] -> 0[]e / #_C[+{Fricative},+{Velar}]'),
+    SIPA.parse_sc(f'C[+{Fricative},+{Velar},-{Palatalized}] -> 0[]a / #_C[+{Fricative},+{Velar}]'),
 
     # Getting rid of weird palatalization
     SIPA.parse_sc(f'C[+{Palatalized},+{Postalveolar}] -> 0[-{Palatalized}]'),
     SIPA.parse_sc(f'C[+{Palatalized},+{Palatal}] -> 0[-{Palatalized}]'),
 
     # Voicing spreads backwards (except for r or l)
-    SIPA.parse_sc(f'C[-{Voiced},-{Approximant},-{Nasal},-{Trill}] -> 0[+{Voiced}] / _C[+{Voiced},-{Trill}]'),
+    SIPA.parse_sc(f'C[-{Voiced},-{Approximant},-{Nasal},-{Trill}] -> 0[+{Voiced}] / _C[+{Voiced},-{Trill}, -{Approximant}]'),
     SIPA.parse_sc(f'C[+{Voiced},-{Approximant},-{Nasal},-{Trill}] -> 0[-{Voiced}] / _C[-{Voiced}]'),
 ])
 GreaterVolodnian.add_child(NorthEasternVolodnian, GVoltoNEVol)
@@ -165,7 +174,8 @@ OZobtoMZob = ChangeSet([
 
     # palatals
     SIPA.parse_sc(f'C[+{Alveolar},+{Palatalized},+{Nasal}] -> 0[-{Alveolar},-{Palatalized},+{Palatal}]'),
-    SIPA.parse_sc(f'C[+{Alveolar},+{Palatalized},-{Trill}] -> 0[-{Alveolar},-{Palatalized},+{Alveopalatal}]')
+    SIPA.parse_sc(f'C[+{Alveolar},+{Palatalized},-{Trill},-{Plosive}] -> 0[-{Alveolar},-{Palatalized},+{Alveopalatal}]'),
+    SIPA.parse_sc(f'C[+{Alveolar},+{Palatalized},+{Plosive}] -> 0[-{Alveolar},-{Palatalized},-{Plosive},+{Affricate},+{Alveopalatal}]'),
 ])
 OldZobrozne.add_child(MiddleZobrozne, OZobtoMZob)
 
@@ -173,6 +183,22 @@ CentralZobrozne = Language('Central Zobrozne', 'CZob', SIPA)
 MZobtoCZob = ChangeSet([
     # Palatal simplifying
     SIPA.parse_sc(f'C[+{Alveopalatal}] -> 0[-{Alveopalatal},+{Postalveolar}]'),
+    SIPA.parse_sc(f'C[+{Palatalized},+{Trill},+{Alveolar}] -> 0[-{Alveolar},+{Postalveolar},-{Trill},+{Fricative},-{Palatalized}]'),
+
+    # Schwa loss
+    SIPA.parse_sc(f'V[+{Mid},+{Central}] -> / V[]C[]_C[]V[]'),
+    SIPA.parse_sc(f'V[+{Mid},+{Central}] -> / C[+{Fricative}]_'),
+
+    # Final schwa
+    SIPA.parse_sc(f'V[+{Open},+{Central}] -> 0[+{Mid},-{Open}] / V[]C[]_#'),
+    SIPA.parse_sc(f'V[+{Open},+{Central}] -> 0[+{Mid},-{Open}] / V[]C[]C[]_#'),
+
+    # Final voiced velar fricative loss
+    SIPA.parse_sc(f'C[+{Velar},+{Voiced},+{Fricative}] -> u // _V[]'),
+    SIPA.parse_sc(f'uu -> ū'),
+
+    # Nasalization loss
+    SIPA.parse_sc(f'V[+{Nasalized}] -> 0[-{Nasalized}]'),
 ])
 MiddleZobrozne.add_child(CentralZobrozne, MZobtoCZob)
 
@@ -181,6 +207,7 @@ MZobtoSZob = ChangeSet([
     # Palatal simplifying
     SIPA.parse_sc(f'C[+{Alveopalatal}] -> 0[-{Alveopalatal},+{Postalveolar}]'),
     SIPA.parse_sc(f'C[+{Palatalized}] -> 0[-{Palatalized}]'),
+    SIPA.parse_sc(f'C[+{Nasal},+{Palatal}] -> 0[-{Palatal},+{Alveolar}]'),
 
     # Vowel Simplifying
     SIPA.parse_sc(f'V[+{Mid}] -> 0[-{Mid},+{Open}]'),
@@ -209,6 +236,10 @@ MZobtoSZob = ChangeSet([
     SIPA.parse_sc(f'V[+{Back}] -> 0[-{Back},+{Front}] / _C[]C[]V[+{Front}]'),
     SIPA.parse_sc(f'V[+{Front}] -> 0[-{Front},+{Back}] / _C[]C[]V[+{Back}]'),
 
+    # moving jsa
+    SIPA.parse_sc(f'C[+{Palatal},+{Approximant}] -> 0[-{Palatal},+{Velar}] / _V[+{Back}]'),
+    SIPA.parse_sc(f'C[+{Palatal},+{Approximant}] -> 0[-{Palatal},+{Velar}] / V[+{Back}]_'),
+
     # realign fronted as
     SIPA.parse_sc(f'V[+{Front},+{Open}] -> 0[-{Open},+{Open_mid}]'),
     
@@ -231,8 +262,16 @@ MZobtoSZob = ChangeSet([
     SIPA.parse_sc(f'V[+{Back},+{Open_mid},-{Rounded}] -> 0[-{Open_mid},+{Open}]'),
 
     # velar harmony
-    SIPA.parse_sc(f'C[+{Velar}] -> 0[-{Velar},+{Uvular}] / _V[+{Back}]'),
-    SIPA.parse_sc(f'C[+{Velar}] -> 0[-{Velar},+{Uvular}] / V[+{Back}]_'),
+    SIPA.parse_sc(f'C[+{Velar},-{Approximant}] -> 0[-{Velar},+{Uvular}] / _V[+{Back}]'),
+    SIPA.parse_sc(f'C[+{Velar},-{Approximant}] -> 0[-{Velar},+{Uvular}] / V[+{Back}]_'),
+    SIPA.parse_sc(f'C[+{Velar},-{Approximant}] -> 0[-{Velar},+{Uvular}] / _C[]V[+{Back}]'),
+    SIPA.parse_sc(f'C[+{Velar},-{Approximant}] -> 0[-{Velar},+{Uvular}] / V[+{Back}]C[]_'),
+
+    # no nasalization
+    SIPA.parse_sc(f'V[+{Nasalized}] -> 0[-{Nasalized}]'),
+
+    # no velar approximant at start
+    SIPA.parse_sc(f'C[+{Velar},+{Approximant}] -> / #_')
 ])
 MiddleZobrozne.add_child(SouthZobrozne, MZobtoSZob)
 
@@ -248,5 +287,31 @@ gvol_words = [
     'vopu', 'vopunā', 'vopuxa', 'vopuvo', 'voput͡si'
 ]
 
-for word in gvol_words:
-    GreaterVolodnian.display_word(SIPA.string_to_word(word))
+text = 'asdf'
+
+def find_language(string, language : Language):
+    if language.short_form == string or language.name == string:
+        return language
+    else:
+        for child, changeset in language.children:
+            value = find_language(string, child)
+            if value != None:
+                return value 
+
+while text is not None:
+    text = input('Enter a language and word: ')
+    parts = text.split(' ')
+
+    if len(parts) == 1:
+        ProtoVolodnian.display_word(SIPA.string_to_word(parts[0]))
+        continue
+
+    language = find_language(parts[0], ProtoVolodnian)
+
+    if language is None:
+        print('not a language!')
+        continue
+
+    language.display_word(SIPA.string_to_word(parts[1]))
+
+
