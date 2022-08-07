@@ -98,7 +98,7 @@ GVoltoNEVol = ChangeSet([
     SIPA.parse_sc(f'C[+{Palatalized},+{Palatal}] -> 0[-{Palatalized}]'),
 
     # Voicing spreads backwards (except for r or l)
-    SIPA.parse_sc(f'C[-{Voiced},-{Approximant},-{Nasal},-{Trill}] -> 0[+{Voiced}] / _C[+{Voiced},-{Trill}, -{Approximant}]'),
+    SIPA.parse_sc(f'C[-{Voiced},-{Approximant},-{Nasal},-{Trill}] -> 0[+{Voiced}] / _C[+{Voiced},-{Trill},-{Approximant}]'),
     SIPA.parse_sc(f'C[+{Voiced},-{Approximant},-{Nasal},-{Trill}] -> 0[-{Voiced}] / _C[-{Voiced}]'),
 ])
 GreaterVolodnian.add_child(NorthEasternVolodnian, GVoltoNEVol)
