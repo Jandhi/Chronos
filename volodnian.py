@@ -54,15 +54,17 @@ EVoltoGVol = ChangeSet([
     SIPA.parse_sc(f'V[+{Close_mid},+{Nasalized}] -> 0[-{Close_mid},+{Open},-{Front},-{Back},-{Rounded},+{Central}]'),
 
     # R Lowering
-    SIPA.parse_sc(f'V[+{Close},-{Long}] -> 0[-{Close},+{Close_mid}] / _r')
+    SIPA.parse_sc(f'V[+{Close},-{Long}] -> 0[-{Close},+{Close_mid}] / _r / V[]_'),
 ])
 EarlyVolodnian.add_child(GreaterVolodnian, EVoltoGVol)
 
 NorthEasternVolodnian = Language('Northeastern Volodnian', 'NEVol', SIPA)
 GVoltoNEVol = ChangeSet([
     # Diphthong Reduction
-    SIPA.parse_sc(f'au -> ɔ̄'),
-    SIPA.parse_sc(f'ai -> ɛ̄'),
+    SIPA.parse_sc(f'V[+{Open}]V[+{Close},+{Back},+{Nasalized}] -> ɔ̄̃'),
+    SIPA.parse_sc(f'V[+{Open}]V[+{Close},+{Back}] -> ɔ̄'),
+    SIPA.parse_sc(f'V[+{Open}]V[+{Close},+{Front},+{Nasalized}] -> ɛ̄̃'),
+    SIPA.parse_sc(f'V[+{Open}]V[+{Close},+{Front}] -> ɛ̄'),
 
     # Great Collapse
 
@@ -112,10 +114,13 @@ NEVoltoNVol = ChangeSet([
     # Single Syllable Stress
     SIPA.parse_sc(f'V[-{Stressed}] -> 0[+{Stressed}] / #_#'),
     SIPA.parse_sc(f'V[-{Stressed}]C[] -> 0[+{Stressed}]1[] / #_#'),
+    SIPA.parse_sc(f'V[-{Stressed}]C[]C[] -> 0[+{Stressed}]1[]2[] / #_#'),
     SIPA.parse_sc(f'C[]V[-{Stressed}] -> 0[]1[+{Stressed}] / #_#'),
     SIPA.parse_sc(f'C[]V[-{Stressed}]C[] -> 0[]1[+{Stressed}]2[] / #_#'),
+    SIPA.parse_sc(f'C[]V[-{Stressed}]C[]C[] -> 0[]1[+{Stressed}]2[]3[] / #_#'),
     SIPA.parse_sc(f'C[]C[]V[-{Stressed}] -> 0[]1[]2[+{Stressed}] / #_#'),
     SIPA.parse_sc(f'C[]C[]V[-{Stressed}]C[] -> 0[]1[]2[+{Stressed}]3[] / #_#'),
+    SIPA.parse_sc(f'C[]C[]V[-{Stressed}]C[]C[] -> 0[]1[]2[+{Stressed}]3[]4[] / #_#'),
 
     # LH start
     SIPA.parse_sc(f'C[]C[]V[-{Long},-{Overlong},-{Stressed}]C[]V[+{Long},-{Stressed}] -> 0[]1[]2[]3[]4[+{Stressed}] / #_'),
@@ -162,8 +167,16 @@ NVoltoOZob = ChangeSet([
     SIPA.parse_sc(f'C[+{Plosive},+{Voiced}] -> 0[-{Plosive},+{Fricative}] / _#'),
     SIPA.parse_sc(f'C[+{Bilabial},+{Fricative}] -> 0[-{Bilabial},+{Labiodental}]'),
 
-    # Palatalized simplification
-    SIPA.parse_sc(f'C[+{Lateral},+{Palatalized}] -> j')
+    # zobroznian back chain shift
+    SIPA.parse_sc(f'V[+{Back},+{Close}] -> 0[-{Back},+{Central}]'),
+    SIPA.parse_sc(f'V[+{Back},+{Close_mid},+{Long}] -> 0[-{Close_mid},+{Close}]'),
+    SIPA.parse_sc(f'V[+{Back},+{Close_mid},+{Overlong}] -> 0[-{Close_mid},+{Close}]'),
+    SIPA.parse_sc(f'V[+{Back},+{Open_mid},+{Long}] -> 0[-{Open_mid},+{Close_mid}]'),
+    SIPA.parse_sc(f'V[+{Back},+{Open_mid},+{Overlong}] -> 0[-{Open_mid},+{Close_mid}]'),
+
+    # palatalized simplification
+    SIPA.parse_sc(f'C[+{Lateral},+{Palatalized}] -> j'),
+    SIPA.parse_sc(f'mʲ -> m // _V[]'),
 ])
 NorthernVolodnian.add_child(OldZobrozne, NVoltoOZob)
 
@@ -176,6 +189,17 @@ OZobtoMZob = ChangeSet([
     SIPA.parse_sc(f'C[+{Alveolar},+{Palatalized},+{Nasal}] -> 0[-{Alveolar},-{Palatalized},+{Palatal}]'),
     SIPA.parse_sc(f'C[+{Alveolar},+{Palatalized},-{Trill},-{Plosive}] -> 0[-{Alveolar},-{Palatalized},+{Alveopalatal}]'),
     SIPA.parse_sc(f'C[+{Alveolar},+{Palatalized},+{Plosive}] -> 0[-{Alveolar},-{Palatalized},-{Plosive},+{Affricate},+{Alveopalatal}]'),
+
+    # front close-mid vowels break
+    SIPA.parse_sc(f'V[+{Close_mid},+{Front}] -> j0[-{Close_mid},+{Open_mid}]'),
+    SIPA.parse_sc(f'V[+{Close_mid},+{Back}] -> 0[-{Close_mid},+{Open_mid}]'),
+
+    # palatalized simplification, again
+    SIPA.parse_sc(f'C[+{Lateral},+{Palatalized}] -> j'),
+    SIPA.parse_sc(f'jj -> j'),
+
+    # close central vowels simplify
+    SIPA.parse_sc(f'V[+{Central},+{Close}] -> 0[-{Central},+{Front},-{Rounded}]'),
 ])
 OldZobrozne.add_child(MiddleZobrozne, OZobtoMZob)
 
@@ -287,7 +311,7 @@ gvol_words = [
     'vopu', 'vopunā', 'vopuxa', 'vopuvo', 'voput͡si'
 ]
 
-text = 'asdf'
+text = ''
 
 def find_language(string, language : Language):
     if language.short_form == string or language.name == string:

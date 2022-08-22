@@ -24,6 +24,8 @@ symbols = [
     (Vowel(Open_mid, Front).rounded().make() , 'œ'),
     (Vowel(Open, Central).make() , 'a'),
     (Vowel(Mid, Central).make() , 'ə'),
+    (Vowel(Close, Central).make() , 'ɨ'),
+    (Vowel(Close, Central).rounded().make() , 'ʉ'),
     (Vowel(Close, Back).rounded().make() , 'u'),
     (Vowel(Close_mid, Back).rounded().make() , 'o'),
     (Vowel(Open_mid, Back).rounded().make() , 'ɔ'),
