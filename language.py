@@ -1,7 +1,7 @@
 from chronology.change_set import ChangeSet
 from orthography.orthography import Orthography
 from util import count_combining
-
+from treelib import Tree, Node
 
 class Language:
     def __init__(self, name, short_form, orthography : Orthography, do_display = True) -> None:
@@ -30,3 +30,18 @@ class Language:
         
         return s
 
+    def display_tree(self, words):
+        tree = Tree()
+        self.build_tree(tree, words)
+        tree.show()
+
+    def build_tree(self, tree : Tree, words, parent = None):
+        string = f'{self.short_form}:'
+
+        for word in words:
+            string = f'{string} {self.orthography.word_to_string(word)}'
+
+        tree.create_node(string, self.short_form, parent)
+
+        for child, changeset in self.children:
+            child.build_tree(tree, [changeset.apply(word) for word in words], self.short_form)

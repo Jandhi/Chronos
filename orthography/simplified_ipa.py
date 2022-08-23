@@ -1,6 +1,6 @@
 
 from orthography.orthography import Orthography, post_symbol
-from phonology.features import Affricate, Alveolar, Alveopalatal, Approximant, Back, Bilabial, Central, Close, Close_mid, Ejective, Fricative, Front, Glottal, Labiodental, Labiovelar, Lateral, Lengthened, Long, Mid, Nasal, Nasalized, Open, Open_mid, Overlong, Palatal, Palatalized, Plosive, Postalveolar, Retroflex, Rounded, Stressed, Tap, Trill, Uvular, Velar
+from phonology.features import Affricate, Alveolar, Alveopalatal, Approximant, Back, Bilabial, Central, Close, Close_mid, Dental, Ejective, Fricative, Front, Glottal, Labiodental, Labiovelar, Lateral, Lengthened, Long, Mid, Nasal, Nasalized, Open, Open_mid, Overlong, Palatal, Palatalized, Plosive, Postalveolar, Retroflex, Rounded, Stressed, Tap, Trill, Uvular, Velar
 from phonology.sound import Consonant, Vowel
 
 processors = [
@@ -22,6 +22,7 @@ symbols = [
     (Vowel(Close_mid, Front).rounded().make() , 'ø'),
     (Vowel(Open_mid, Front).make() , 'ɛ'),
     (Vowel(Open_mid, Front).rounded().make() , 'œ'),
+    (Vowel(Open, Front).make(), 'æ'),
     (Vowel(Open, Central).make() , 'a'),
     (Vowel(Mid, Central).make() , 'ə'),
     (Vowel(Close, Central).make() , 'ɨ'),
@@ -54,6 +55,8 @@ symbols = [
     (Consonant(Bilabial, Fricative).voiced().make(), 'β'),
     (Consonant(Labiodental, Fricative).make(), 'f'),
     (Consonant(Labiodental, Fricative).voiced().make(), 'v'),
+    (Consonant(Dental, Fricative).make(), 'θ'),
+    (Consonant(Dental, Fricative).voiced().make(), 'ð'),
     (Consonant(Alveolar, Fricative).make(), 's'),
     (Consonant(Alveolar, Fricative).voiced().make(), 'z'),
     (Consonant(Alveopalatal, Fricative).make(), 'ɕ'),
@@ -66,6 +69,7 @@ symbols = [
     (Consonant(Palatal, Fricative).voiced().make(), 'ʝ'),
     (Consonant(Velar, Fricative).make(), 'x'),
     (Consonant(Velar, Fricative).voiced().make(), 'ɣ'),
+    (Consonant(Velar, Fricative).voiced().make(), 'g-'),
     (Consonant(Uvular, Fricative).make(), 'χ'),
     (Consonant(Uvular, Fricative).voiced().make(), 'ʁ'),
     (Consonant(Glottal, Fricative).make(), 'h'),
