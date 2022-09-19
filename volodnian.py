@@ -6,7 +6,7 @@ from phonology.features import *
 sc = SIPA.parse_sc
 
 ProtoVolodnian = Language('Proto-Volodnian', 'PVol', SIPA)
-EarlyVolodnian = Language('Early Volodnian', 'EVol', SIPA)
+EarlyVolodnian = Language('Early Volodnian', 'ErVol', SIPA)
 
 PVol_to_EVol = ChangeSet([
     
@@ -15,10 +15,9 @@ PVol_to_EVol = ChangeSet([
     sc(f'e -> o / _C[]V[+{Close},+{Rounded}]'),
     sc(f'ā -> ō / _C[]V[+{Close},+{Rounded}]'),
     sc(f'ē -> ō / _C[]V[+{Close},+{Rounded}]'),
-    sc(f'i -> u / _C[]V[+{Close},+{Rounded}]'),
+    sc(f'i -> u / _C[]V[+{Close},+{Rounded}] / a_'), # doesn't apply to ai
     sc(f'ī -> ū / _C[]V[+{Close},+{Rounded}]'),
     
-
     # Nasal Merger
     sc(f'ŋ -> n'),
 
@@ -33,6 +32,7 @@ PVol_to_EVol = ChangeSet([
     # Short Vowel Merger
     sc(f'V[+{Close_mid},-{Long}] -> 0[+{Lengthened}] / #_'),
     sc(f'C[]V[+{Close_mid},-{Long}] -> 0[]1[+{Lengthened}] / #_'),
+    sc(f'C[]C[]V[+{Close_mid},-{Long}] -> 0[]1[]2[+{Lengthened}] / #_'),
     sc(f'V[+{Close_mid},-{Long},-{Lengthened}] -> 0[-{Close_mid},+{Close}] // _j'),
     sc(f'V[+{Lengthened}] -> 0[-{Lengthened}]'),
 ])
@@ -57,13 +57,10 @@ EVol_to_GVol = ChangeSet([
 ])
 EarlyVolodnian.add_child(GreaterVolodnian, EVol_to_GVol)
 
-from north_volodnian import *
+from vol.north_volodnian import *
 GreaterVolodnian.add_child(NorthEasternVolodnian, GVol_to_NEVol)
 
-from zobroznan import *
-NorthernVolodnian.add_child(OldZobrozne, NVol_to_OZob)
-
-from south_volodnian import *
+from vol.south_volodnian import *
 GreaterVolodnian.add_child(SouthWesternVolodnian, GVol_to_SWVol)
 
 words = [
@@ -80,8 +77,8 @@ gvol_words = [
 
 text = ''
 
-def find_language(string, language : Language):
-    if language.short_form == string or language.name == string:
+def find_language(string : str, language : Language):
+    if language.short_form.lower() == string.lower() or language.name.lower() == string.lower():
         return language
     else:
         for child, changeset in language.children:
@@ -92,8 +89,18 @@ def find_language(string, language : Language):
 while text is not None:
     text = input('Enter words:')
     parts = text.split(' ')
-    
-    ProtoVolodnian.display_tree([SIPA.string_to_word(word) for word in parts])
+
+    if parts[0].startswith('-'):
+        lang_name = parts[0][1:]
+        parts = parts[1:]
+        lang = find_language(lang_name, ProtoVolodnian)
+
+        if lang is not None:
+            lang.display_tree([SIPA.string_to_word(word) for word in parts])
+        else:
+            print(f'ERROR: language {lang_name} not found')
+    else:
+        ProtoVolodnian.display_tree([SIPA.string_to_word(word) for word in parts])
         
 
 

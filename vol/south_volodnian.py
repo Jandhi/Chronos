@@ -7,7 +7,14 @@ sc = SIPA.parse_sc
 
 SouthWesternVolodnian = Language('Southwestern Volodnian', 'SWVol', SIPA)
 GVol_to_SWVol = ChangeSet([
+    # syncope
+    sc(f'V[-{Long}] -> / V[]C[]_C[]V[]'),
+
+    # labial shift
+    sc(f'C[+{Labiodental}] -> 0[-{Labiodental},+{Bilabial}]'),
     
+    # hardening
+    sc(f'C[+{Fricative},+{Voiced}] -> 0[-{Fricative},+{Plosive}] / V[]_ '),
 ])
 
 
@@ -34,5 +41,6 @@ SWVol_to_WVol = ChangeSet([
 ])
 SouthWesternVolodnian.add_child(WesternVolodnian, SWVol_to_WVol)
 
-from volta import *
+from vol.volta import *
 WesternVolodnian.add_child(SouthernVoldna, WVol_to_SVld)
+WesternVolodnian.add_child(NorthernVoldna, WVol_to_NVld)

@@ -49,6 +49,14 @@ GVol_to_NEVol = ChangeSet([
     # Voicing spreads backwards (except for r or l)
     sc(f'C[-{Voiced},-{Approximant},-{Nasal},-{Trill}] -> 0[+{Voiced}] / _C[+{Voiced},-{Trill},-{Approximant},-{Nasal}]'),
     sc(f'C[+{Voiced},-{Approximant},-{Nasal},-{Trill}] -> 0[-{Voiced}] / _C[-{Voiced}]'),
+
+    # Syncope for weak syllables with l or r
+    sc(f'V[-{Long}] -> / V[]C[+{Plosive}]_C[+{Trill}]V[]'),
+    sc(f'V[-{Long}] -> / V[]C[+{Plosive}]_C[+{Lateral}]V[]'),
+
+    # palatals spread
+    sc(f'C[-{Palatalized},-{Palatal},-{Postalveolar}] -> 0[+{Palatalized}] / _C[+{Palatalized}]'),
+    sc(f'C[-{Palatalized},-{Palatal},-{Postalveolar}] -> 0[+{Palatalized}] / C[+{Palatalized}]_'),
 ])
 
 NorthernVolodnian = Language('Northern Volodnian', 'NVol', SIPA)
@@ -91,6 +99,17 @@ NEVoltoNVol = ChangeSet([
     sc(f'V[+{Lengthened},+{Close}] -> 0[-{Close},+{Close_mid}]'),
 
     # Deaffrication
-    sc(f'C[+{Affricate},+{Voiced}] -> 0[-{Affricate},+{Fricative}] / V[]_')
+    sc(f'C[+{Affricate},+{Voiced}] -> 0[-{Affricate},+{Fricative}] / _'),
+
+    # Cluster merging
+    sc(f'C[+{Fricative},+{Velar}] -> / C[+{Postalveolar}]_'),
+    sc(f'C[+{Fricative},+{Velar}] -> 0[-{Velar},+{Postalveolar}] / _C[+{Postalveolar},+{Affricate}]'),
+    sc(f'C[+{Fricative},+{Velar}] -> / _C[+{Postalveolar}]'),
 ])
 NorthEasternVolodnian.add_child(NorthernVolodnian, NEVoltoNVol)
+
+from vol.zobroznan import *
+NorthernVolodnian.add_child(OldZobrozne, NVol_to_OZob)
+
+from vol.valarkan import *
+NorthernVolodnian.add_child(OldValarkan, NVol_to_OVal)

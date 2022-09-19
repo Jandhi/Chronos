@@ -1,17 +1,23 @@
 
 from orthography.orthography import Orthography, post_symbol
-from phonology.features import Affricate, Alveolar, Alveopalatal, Approximant, Back, Bilabial, Central, Close, Close_mid, Dental, Ejective, Fricative, Front, Glottal, Labiodental, Labiovelar, Lateral, Lengthened, Long, Mid, Nasal, Nasalized, Open, Open_mid, Overlong, Palatal, Palatalized, Plosive, Postalveolar, Retroflex, Rounded, Stressed, Tap, Trill, Uvular, Velar
+from phonology.features import *
 from phonology.sound import Consonant, Vowel
 
 processors = [
     post_symbol(Lengthened, '\u0301'),
+    post_symbol(Lengthened, '^/'),
     post_symbol(Long, '\u0304'),
     post_symbol(Long, '_'),
     post_symbol(Overlong, '\u0302'),
+    post_symbol(Overlong, '^^'),
     post_symbol(Nasalized, '\u0303'),
+    post_symbol(Nasalized, '^n'),
     post_symbol(Palatalized, 'ʲ'),
+    post_symbol(Palatalized, '^j'),
     post_symbol(Stressed, '\u0331'),
     post_symbol(Ejective, '\''),
+    post_symbol(Aspirated, 'ʰ'),
+    post_symbol(Aspirated, '^h'),
 ]
 
 symbols = [
@@ -63,8 +69,12 @@ symbols = [
     (Consonant(Alveopalatal, Fricative).voiced().make(), 'ʑ'),
     (Consonant(Postalveolar, Fricative).make(), 'ʃ'),
     (Consonant(Postalveolar, Fricative).voiced().make(), 'ʒ'),
+    (Consonant(Postalveolar, Fricative).make(), 's$'),
+    (Consonant(Postalveolar, Fricative).voiced().make(), 'z$'),
     (Consonant(Retroflex, Fricative).make(), 'ʂ'),
     (Consonant(Retroflex, Fricative).voiced().make(), 'ʐ'),
+    (Consonant(Retroflex, Fricative).make(), 's,'),
+    (Consonant(Retroflex, Fricative).voiced().make(), 'z,'),
     (Consonant(Palatal, Fricative).make(), 'ç'),
     (Consonant(Palatal, Fricative).voiced().make(), 'ʝ'),
     (Consonant(Velar, Fricative).make(), 'x'),
@@ -74,6 +84,9 @@ symbols = [
     (Consonant(Uvular, Fricative).voiced().make(), 'ʁ'),
     (Consonant(Glottal, Fricative).make(), 'h'),
     (Consonant(Glottal, Fricative).voiced().make(), 'ɦ'),
+    # lateral fricatives
+    (Consonant(Alveolar, Fricative).with_feature(Lateral).make(), 'ɬ'),
+    (Consonant(Alveolar, Fricative).with_feature(Lateral).voiced().make(), 'ɮ'),
     # Affricates
     (Consonant(Alveolar, Affricate).make(), 't͡s'),
     (Consonant(Alveolar, Affricate).make(), 't&s'),
@@ -84,9 +97,13 @@ symbols = [
     (Consonant(Alveopalatal, Affricate).voiced().make(), 'd͡ʑ'),
     (Consonant(Alveopalatal, Affricate).voiced().make(), 'd&ʑ'),
     (Consonant(Postalveolar, Affricate).make(), 't͡ʃ'),
-    (Consonant(Postalveolar, Affricate).make(), 't&ʃ'),
+    (Consonant(Postalveolar, Affricate).make(), 't&s$'),
     (Consonant(Postalveolar, Affricate).voiced().make(), 'd͡ʒ'),
-    (Consonant(Postalveolar, Affricate).voiced().make(), 'd&ʒ'),
+    (Consonant(Postalveolar, Affricate).voiced().make(), 'd&z$'),
+    (Consonant(Retroflex, Affricate).make(), 't͡ʂ'),
+    (Consonant(Retroflex, Affricate).make(), 't&s,'),
+    (Consonant(Retroflex, Affricate).voiced().make(), 'd͡ʐ'),
+    (Consonant(Retroflex, Affricate).voiced().make(), 'd&z,'),
     # Approximants and trills
     (Consonant(Labiovelar, Approximant).make(), 'ʍ'),
     (Consonant(Labiovelar, Approximant).voiced().make(), 'w'),
@@ -94,6 +111,7 @@ symbols = [
     (Consonant(Alveolar, Trill).voiced().make(), 'r'),
     (Consonant(Alveolar, Tap).voiced().make(), 'ɾ'),
     (Consonant(Alveolar, Approximant).with_feature(Lateral).voiced().make(), 'l'),
+    (Consonant(Palatal, Approximant).with_feature(Lateral).voiced().make(), 'ʎ'),
     (Consonant(Palatal, Approximant).voiced().make(), 'j'),
     (Consonant(Velar, Approximant).voiced().make(), 'ɰ'),
 ]

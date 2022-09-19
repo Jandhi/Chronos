@@ -22,7 +22,7 @@ def post_symbol(feature, symbol):
         return f'{orthography.sound_to_string(new_sound)}{symbol}'
     
     def rfunc(string : str, orthography : Orthography):
-        snd : set = orthography.string_to_sound(string[:-1])
+        snd : set = orthography.string_to_sound(string[:-1 * len(symbol)])
 
         if snd is None:
             return snd
