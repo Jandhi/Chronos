@@ -33,6 +33,9 @@ NVol_to_OZob = ChangeSet([
     # palatalized simplification
     sc(f'C[+{Lateral},+{Palatalized}] -> j'),
     sc(f'mʲ -> m // _V[]'),
+
+    # cluster simplifying
+    sc(f'C[+{Plosive},+{Alveolar}] -> / C[+{Affricate}]_'),
 ])
 
 MiddleZobrozne = Language('Middle Zobrozne', 'MZob', SIPA)
@@ -75,6 +78,7 @@ MZob_to_CZob = ChangeSet([
     # Palatal simplifying
     sc(f'C[+{Alveopalatal}] -> 0[-{Alveopalatal},+{Postalveolar}]'),
     sc(f'C[+{Palatalized},+{Trill},+{Alveolar}] -> 0[-{Alveolar},+{Postalveolar},-{Trill},+{Fricative},-{Palatalized}]'),
+    sc(f'C[+{Palatalized},+{Velar}] -> 0[-{Palatalized},-{Velar},+{Palatal}]'),
 
     # Schwa loss
     sc(f'V[+{Mid},+{Central}] -> / V[]C[]_C[]V[]'),
@@ -90,6 +94,13 @@ MZob_to_CZob = ChangeSet([
 
     # Nasalization loss
     sc(f'V[+{Nasalized}] -> 0[-{Nasalized}]'),
+
+    # Diphthong Simplified
+    sc(f'əj -> i'),
+
+    # Clusters simplify
+    sc(f'C[+{Fricative},+{Postalveolar}]C[+{Fricative},+{Palatal},+{Voiced}] -> 0[+{Voiced}]0[+{Voiced}]'),
+    sc(f'C[+{Fricative},+{Postalveolar}]C[+{Fricative},+{Palatal},-{Voiced}] -> 0[-{Voiced}]0[-{Voiced}]'),
 ])
 MiddleZobrozne.add_child(CentralZobrozne, MZob_to_CZob)
 

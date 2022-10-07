@@ -73,6 +73,7 @@ Implosive = 'implosive'
 # Features
 
 Voiced = 'voiced'
+Devoiced = 'devoiced'
 Lateral = 'lateral'
 Palatalized = 'palatalized'
 Aspirated = 'aspirated'

@@ -18,6 +18,8 @@ processors = [
     post_symbol(Ejective, '\''),
     post_symbol(Aspirated, 'ʰ'),
     post_symbol(Aspirated, '^h'),
+    post_symbol(Devoiced, '̥'),
+    post_symbol(Devoiced, '.o'),
 ]
 
 symbols = [
@@ -107,11 +109,16 @@ symbols = [
     # Approximants and trills
     (Consonant(Labiovelar, Approximant).make(), 'ʍ'),
     (Consonant(Labiovelar, Approximant).voiced().make(), 'w'),
+    (Consonant(Alveolar, Approximant).make(), 'ɹ̥'),
     (Consonant(Alveolar, Approximant).voiced().make(), 'ɹ'),
+    (Consonant(Alveolar, Trill).make(), 'r̥'),
     (Consonant(Alveolar, Trill).voiced().make(), 'r'),
     (Consonant(Alveolar, Tap).voiced().make(), 'ɾ'),
+    (Consonant(Alveolar, Approximant).with_feature(Lateral).make(), 'l̥'),
     (Consonant(Alveolar, Approximant).with_feature(Lateral).voiced().make(), 'l'),
+    (Consonant(Palatal, Approximant).with_feature(Lateral).make(), 'ʎ̥'),
     (Consonant(Palatal, Approximant).with_feature(Lateral).voiced().make(), 'ʎ'),
+    (Consonant(Palatal, Approximant).make(), 'j̥'),
     (Consonant(Palatal, Approximant).voiced().make(), 'j'),
     (Consonant(Velar, Approximant).voiced().make(), 'ɰ'),
 ]

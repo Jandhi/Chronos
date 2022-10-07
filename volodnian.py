@@ -51,9 +51,6 @@ EVol_to_GVol = ChangeSet([
 
     # Nasal Vowel Merger
     sc(f'V[+{Close_mid},+{Nasalized}] -> 0[-{Close_mid},+{Open},-{Front},-{Back},-{Rounded},+{Central}]'),
-
-    # R Lowering
-    sc(f'V[+{Close},-{Long}] -> 0[-{Close},+{Close_mid}] / _r / V[]_'),
 ])
 EarlyVolodnian.add_child(GreaterVolodnian, EVol_to_GVol)
 

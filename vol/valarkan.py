@@ -46,6 +46,8 @@ OVal_to_MVal = ChangeSet([
     # voicing difference turns to aspiration difference
     sc(f'C[+{Plosive},-{Voiced}] -> 0[+{Aspirated}] / #_'),
     sc(f'C[+{Plosive},+{Voiced}] -> 0[-{Voiced}] / #_'),
+    sc(f'C[+{Approximant},+{Voiced}] -> 0[-{Voiced}] / #_'),
+    sc(f'C[+{Trill},+{Voiced}] -> 0[-{Voiced}] / #_'),
 ])
 OldValarkan.add_child(MiddleValarkan, OVal_to_MVal)
 

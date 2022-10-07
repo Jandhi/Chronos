@@ -15,6 +15,11 @@ GVol_to_SWVol = ChangeSet([
     
     # hardening
     sc(f'C[+{Fricative},+{Voiced}] -> 0[-{Fricative},+{Plosive}] / V[]_ '),
+
+    # long vowel shift
+    sc(f'V[+{Open},+{Central},+{Long}] -> 0[-{Open},+{Open_mid},-{Central},+{Front}] / C[+{Alveolar},-{Lateral}]_'),
+    sc(f'V[+{Open},+{Central},+{Long}] -> 0[-{Open},+{Open_mid},-{Central},+{Back},+{Rounded}]'),
+    sc(f'V[+{Open}]V[+{Close}] -> 0[+{Long}]'),
 ])
 
 
@@ -38,6 +43,8 @@ SWVol_to_WVol = ChangeSet([
     # deaffrication
     sc(f'C[+{Affricate}] -> 0[-{Affricate},+{Fricative}]'),
 
+    # ja change
+    sc(f'je -> ja'),
 ])
 SouthWesternVolodnian.add_child(WesternVolodnian, SWVol_to_WVol)
 
