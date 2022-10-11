@@ -33,6 +33,7 @@ NVol_to_OZob = ChangeSet([
     # palatalized simplification
     sc(f'C[+{Lateral},+{Palatalized}] -> j'),
     sc(f'mʲ -> m // _V[]'),
+    sc(f'nʲ -> n / _#'),
 
     # cluster simplifying
     sc(f'C[+{Plosive},+{Alveolar}] -> / C[+{Affricate}]_'),
@@ -60,6 +61,9 @@ OZob_to_MZob = ChangeSet([
     # long vowel loss
     sc(f'V[+{Long}] -> 0[-{Long}]'),
 
+    # final a change after palatalized
+    sc(f'V[+{Open}] -> 0[+{Open_mid},-{Open},-{Central},+{Front}] / C[+{Palatalized}]_'),
+    
     # palatals
     sc(f'C[+{Alveolar},+{Palatalized},+{Nasal}] -> 0[-{Alveolar},-{Palatalized},+{Palatal}]'),
     sc(f'C[+{Alveolar},+{Palatalized},-{Trill},-{Plosive}] -> 0[-{Alveolar},-{Palatalized},+{Alveopalatal}]'),
@@ -67,9 +71,6 @@ OZob_to_MZob = ChangeSet([
 
     # close central vowels simplify
     sc(f'V[+{Central},+{Close}] -> 0[-{Central},+{Front},-{Rounded}]'),    
-
-    # final a change after palatalized
-    sc(f'V[+{Open}] -> 0[+{Open_mid},-{Open},-{Central},+{Front}] / C[+{Palatalized}]_'),
 ])
 OldZobrozne.add_child(MiddleZobrozne, OZob_to_MZob)
 

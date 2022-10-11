@@ -16,14 +16,12 @@ GVol_to_NEVol = ChangeSet([
     # Great Collapse
 
     # lengthening
-    sc(f'V[-{Long},-{Lengthened}] -> 0[+{Lengthened}] / _C[]i <<'),
-    sc(f'V[-{Long},-{Lengthened}] -> 0[+{Lengthened}] / _C[]u <<'),
-    sc(f'V[+{Long}] -> 0[+{Overlong},-{Long}] / _C[]i <<'),
-    sc(f'V[+{Long}] -> 0[+{Overlong},-{Long}] / _C[]u <<'),
+    sc(f'V[-{Long},-{Lengthened}] -> 0[+{Lengthened}] / _C[]V[+{Close},-{Long},-{Lengthened}] <<'),
+    sc(f'V[+{Long}] -> 0[+{Overlong},-{Long}] / _C[]V[+{Close},-{Long}] <<'),
 
     # Ironing out some exceptions
     sc(f'V[+{Lengthened}] -> 0[-{Lengthened}] / _C[]V[+{Lengthened}]C[]V[+{Close},-{Long}]'),
-    sc(f'V[+{Overlong}] -> 0[-{Overlong}] / _C[]V[+{Lengthened}]C[]V[+{Close},-{Long}]'),
+    sc(f'V[+{Overlong}] -> 0[-{Overlong},+{Long}] / _C[]V[+{Lengthened}]C[]V[+{Close},-{Long}]'),
     
     # fricatives voice along the way
     sc(f'V[]C[+{Fricative}] -> 0[]1[+{Voiced}] / #_V[+{Close},-{Long},-{Overlong},-{Lengthened},-{Nasalized}]'),
